@@ -26,7 +26,8 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 ORIGINAL = RAIZ / "docs" / "fuente-original-greywall-2017.html"
-GEDCOM = RAIZ / "data" / "arbol-robson.ged"
+GEDCOM = Path(sys.argv[1]) if len(sys.argv) > 1 and not sys.argv[1].startswith("-") \
+    else RAIZ / "data" / "arbol-robson.ged"
 
 
 # --------------------------------------------------------------------------
