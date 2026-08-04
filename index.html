@@ -74,7 +74,7 @@
           <button class="about__close" aria-label="Cerrar">&times;</button>
         </form>
 
-        <h2>Acerca de este árbol</h2>
+        <h2>Acerca de este árbol <span class="about__alt">· About this tree</span></h2>
 
         <h3>Fuente original</h3>
         <p>
@@ -92,10 +92,75 @@
              target="_blank" rel="noreferrer noopener">Internet Archive</a>.
         </p>
 
-        <h3>Quienes lo hicieron posible</h3>
+        <h3>Esta edición</h3>
+        <p>
+          Edición familiar Brito Devoto: conversión del documento original a
+          GEDCOM 5.5.1 y este visor. La obra de Graeme Wall estuvo publicada en
+          abierto entre 2004 y 2019; al desaparecer su sitio, esta edición la
+          vuelve a poner en línea.
+        </p>
+
+        <!-- Se muestra sólo una de las dos, según el modo privacidad activo. -->
+        <p id="about-privacy-on" hidden>
+          Por respeto a quienes siguen vivos, de las personas sin defunción
+          registrada y nacidas después de 1930 se muestra sólo el nombre: ni
+          fechas, ni lugares, ni notas.
+        </p>
+        <p id="about-privacy-off" hidden>
+          Se muestran los datos tal como figuraban en la publicación original.
+          Si aparecés en este árbol y querés que se quiten o corrijan tus datos,
+          escribí a <a href="mailto:santiagobrito@gmail.com?subject=Arbol%20familiar%20Robson">santiagobrito@gmail.com</a>
+          y lo hacemos.
+        </p>
+
+        <hr class="about__sep" />
+
+        <div lang="en">
+          <h3>Original source</h3>
+          <p>
+            The data comes from <strong><em>Descendants of Hugh Robson</em></strong>,
+            the genealogical research of <strong>Graeme Wall</strong>,
+            <strong>version 10z, 4 May 2015</strong>.
+          </p>
+          <p class="about__copyright">&copy; Graeme Wall, 2004&ndash;2014.</p>
+          <p>
+            It was published at
+            <code>http://www.greywall.demon.co.uk/genealogy/robson.html</code>.
+            That site is gone: it disappeared when Demon Internet, the British
+            provider hosting it, shut down. Copies survive at the
+            <a href="https://web.archive.org/web/2017/http://www.greywall.demon.co.uk/genealogy/robson.html"
+               target="_blank" rel="noreferrer noopener">Internet Archive</a>.
+          </p>
+
+          <h3>This edition</h3>
+          <p>
+            A family edition by the Brito Devoto family: the original document
+            converted to GEDCOM 5.5.1, plus this viewer. Graeme Wall's work was
+            openly published between 2004 and 2019; with his site gone, this
+            edition puts it back online.
+          </p>
+
+          <p id="about-privacy-on-en" hidden>
+            Out of respect for the living, people with no recorded death who were
+            born after 1930 are shown by name only: no dates, no places, no notes.
+          </p>
+          <p id="about-privacy-off-en" hidden>
+            The data is shown as it appeared in the original publication. If you
+            appear in this tree and would like your details removed or corrected,
+            write to <a href="mailto:santiagobrito@gmail.com?subject=Hugh%20Robson%20family%20tree">santiagobrito@gmail.com</a>
+            and we will take care of it.
+          </p>
+        </div>
+
+        <hr class="about__sep" />
+
+        <h3>Quienes lo hicieron posible <span class="about__alt">· Contributors</span></h3>
         <p>
           El propio Graeme Wall acreditaba en su web a las decenas de familiares
-          y colaboradores que aportaron datos a lo largo de los años:
+          y colaboradores que aportaron datos a lo largo de los años.
+          <span lang="en" class="about__alt">Graeme Wall credited on his own site
+          the dozens of relatives and contributors who supplied information over
+          the years.</span>
         </p>
         <p class="about__contributors">
           Robert Wells y Lucia Whitehead (Reino Unido) · Lea Armstrong, Ken Brown,
@@ -118,29 +183,6 @@
           John Campbell (Francia) · Paul Gladish (España) · Victoria MacDonald e
           Ian Seton Campbell (Sudáfrica) · Harriet Sain (Italia) ·
           Lorraine Bottreau (Singapur).
-        </p>
-
-        <h3>Esta edición</h3>
-        <p>
-          Edición familiar Brito Devoto: conversión del documento original a
-          GEDCOM 5.5.1 y este visor. La obra de Graeme Wall estuvo publicada en
-          abierto entre 2004 y 2019; al desaparecer su sitio, esta edición la
-          vuelve a poner en línea.
-        </p>
-
-        <!-- Se muestra sólo una de las dos, según el modo privacidad activo. -->
-        <p id="about-privacy-on" hidden>
-          Por respeto a quienes siguen vivos, de las personas sin defunción
-          registrada y nacidas después de 1930 se muestra sólo el nombre: ni
-          fechas, ni lugares, ni notas. Para correcciones o para pedir que se
-          quiten tus datos:
-          <a href="mailto:santiagobrito@gmail.com?subject=Arbol%20familiar%20Robson">santiagobrito@gmail.com</a>.
-        </p>
-        <p id="about-privacy-off" hidden>
-          Se muestran los datos tal como figuraban en la publicación original.
-          Si aparecés en este árbol y querés que se quiten o corrijan tus datos,
-          escribí a <a href="mailto:santiagobrito@gmail.com?subject=Arbol%20familiar%20Robson">santiagobrito@gmail.com</a>
-          y lo hacemos.
         </p>
       </dialog>
     </div>

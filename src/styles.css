@@ -289,6 +289,18 @@ body {
   font-weight: 600;
 }
 
+/* Marca el idioma secundario sin duplicar visualmente el peso del principal. */
+.about__alt {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.about__sep {
+  margin: 1.6rem 0 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
 .about__contributors {
   color: var(--text-muted);
   font-size: 0.85rem;

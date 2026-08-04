@@ -134,8 +134,12 @@ class App {
 
     const about = $<HTMLDialogElement>('#about');
     // El panel de créditos no puede afirmar algo que la configuración desmiente.
-    $('#about-privacy-on').hidden = !this.cfg.privacyMode;
-    $('#about-privacy-off').hidden = this.cfg.privacyMode;
+    // Va en castellano y en inglés: buena parte de la familia del árbol está en
+    // Australia, Reino Unido, Estados Unidos y Canadá.
+    for (const sufijo of ['', '-en']) {
+      $(`#about-privacy-on${sufijo}`).hidden = !this.cfg.privacyMode;
+      $(`#about-privacy-off${sufijo}`).hidden = this.cfg.privacyMode;
+    }
     $('#about-open').addEventListener('click', () => about.showModal());
 
     const input = $<HTMLInputElement>('#search-input');
