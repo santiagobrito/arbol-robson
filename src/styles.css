@@ -1,0 +1,474 @@
+/*
+ * Estilos del visor.
+ *
+ * Prioridad movil: objetivos tactiles de 44px, tipografia del sistema, y la
+ * ficha como hoja inferior deslizable en pantallas chicas y panel lateral en
+ * escritorio. Paleta calida y sobria, no un dashboard.
+ */
+
+:root {
+  --bg: #f6f2ec;
+  --surface: #fffdfa;
+  --surface-2: #efe8de;
+  --border: #ddd2c4;
+  --text: #2f2822;
+  --text-muted: #6d6157;
+  --accent: #7a5c3e;
+  --accent-contrast: #fffdfa;
+  --danger: #9c3b2e;
+  --shadow: 0 10px 30px rgb(47 40 34 / 18%);
+  --radius: 12px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1d1a17;
+    --surface: #262220;
+    --surface-2: #322c28;
+    --border: #443c36;
+    --text: #f0e9e1;
+    --text-muted: #b3a79b;
+    --accent: #c99b6b;
+    --accent-contrast: #211d1a;
+    --danger: #e08a7c;
+    --shadow: 0 10px 30px rgb(0 0 0 / 45%);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+  overscroll-behavior: none;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+
+.status {
+  margin: 0;
+  padding: 3rem 1.5rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.status--error {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+/* ---------- Barra superior ---------- */
+
+.topbar {
+  z-index: 20;
+  flex: 0 0 auto;
+  padding: 0.6rem 0.9rem;
+  padding-top: max(0.6rem, env(safe-area-inset-top));
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.topbar__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.topbar__row--controls {
+  margin-top: 0.6rem;
+}
+
+.topbar__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.topbar__current {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ---------- Buscador ---------- */
+
+.search {
+  position: relative;
+  flex: 1 1 240px;
+  min-width: 0;
+}
+
+.search__input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: inherit;
+  font: inherit;
+}
+
+.search__input:focus-visible {
+  border-color: var(--accent);
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.search__results {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 0.35rem);
+  right: 0;
+  left: 0;
+  overflow-y: auto;
+  max-height: min(60vh, 420px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.search-result {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.6rem 0.85rem;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.search-result:last-child {
+  border-bottom: 0;
+}
+
+.search-result:hover,
+.search-result:focus-visible {
+  background: var(--surface-2);
+  outline: none;
+}
+
+.search-empty {
+  margin: 0;
+  padding: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ---------- Controles ---------- */
+
+.segmented {
+  display: flex;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.segmented__btn {
+  min-height: 40px;
+  padding: 0 0.8rem;
+  border: 0;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.segmented__btn:last-child {
+  border-right: 0;
+}
+
+.segmented__btn[aria-pressed='true'] {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 600;
+}
+
+.gens {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.gens__label {
+  color: var(--text-muted);
+}
+
+.gens__input {
+  width: 110px;
+  accent-color: var(--accent);
+}
+
+.gens__value {
+  min-width: 1.2em;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.notice {
+  margin: 0;
+  padding: 0.5rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ---------- Lienzo del arbol ---------- */
+
+.viewport {
+  position: relative;
+  flex: 1 1 auto;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 1px 1px, var(--border) 1px, transparent 0) 0 0 / 28px 28px,
+    var(--bg);
+  cursor: grab;
+  /* Sin esto el navegador se queda el gesto de pinza y d3-zoom no lo ve. */
+  touch-action: none;
+}
+
+.viewport:active {
+  cursor: grabbing;
+}
+
+.pan {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+#chart text {
+  user-select: none;
+}
+
+.zoom-controls {
+  position: absolute;
+  right: 0.9rem;
+  bottom: calc(0.9rem + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.zoom-btn {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1.25rem;
+  line-height: 1;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+
+/* ---------- Ficha ---------- */
+
+.details {
+  position: fixed;
+  z-index: 40;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-height: 72dvh;
+  padding-bottom: env(safe-area-inset-bottom);
+  border-top: 1px solid var(--border);
+  border-radius: 16px 16px 0 0;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.details__body {
+  overflow-y: auto;
+  max-height: inherit;
+  padding: 1.1rem 1.1rem 1.4rem;
+}
+
+.details__close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.details-header__name {
+  margin: 0 2.5rem 0.2rem 0;
+  font-size: 1.3rem;
+}
+
+.details-header__maiden {
+  margin: 0 0 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.details-header__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.7rem 0 1rem;
+}
+
+.btn {
+  min-height: 44px;
+  padding: 0 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.btn--primary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 600;
+}
+
+.details-facts {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 0.9rem;
+}
+
+.details-fact {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.details-fact__label {
+  flex: 0 0 6.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.details-fact__value {
+  flex: 1;
+}
+
+.details-notice {
+  margin: 0 0 0.9rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.details-note {
+  margin: 0 0 0.7rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.details-section {
+  margin-top: 1rem;
+}
+
+.details-section__title {
+  margin: 0 0 0.35rem;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.details-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.details-list li {
+  border-bottom: 1px solid var(--border);
+}
+
+.details-list li:last-child {
+  border-bottom: 0;
+}
+
+.person-link {
+  display: block;
+  min-height: 44px;
+  padding: 0.6rem 0;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.person-link:hover {
+  text-decoration: underline;
+}
+
+.person-link--unknown {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.details-spouse {
+  padding-bottom: 0.4rem;
+}
+
+.details-spouse__marriage {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ---------- Escritorio ---------- */
+
+@media (min-width: 900px) {
+  .details {
+    top: 0;
+    left: auto;
+    width: 380px;
+    max-height: 100dvh;
+    border-top: 0;
+    border-left: 1px solid var(--border);
+    border-radius: 0;
+  }
+
+  .details__body {
+    max-height: 100dvh;
+  }
+}

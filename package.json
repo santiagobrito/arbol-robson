@@ -1,0 +1,27 @@
+{
+  "name": "arbol-robson",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Visor web del arbol genealogico familiar Robson (GEDCOM 5.5.1)",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "check:gedcom": "node scripts/check-gedcom.mjs"
+  },
+  "dependencies": {
+    "d3-selection": "^3.0.0",
+    "d3-transition": "^3.0.1",
+    "d3-zoom": "^3.0.0",
+    "topola": "^3.10.3"
+  },
+  "devDependencies": {
+    "@types/d3-selection": "^3.0.11",
+    "@types/d3-transition": "^3.0.9",
+    "@types/d3-zoom": "^3.0.8",
+    "@types/node": "^26.1.2",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.0"
+  }
+}

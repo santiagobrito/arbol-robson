@@ -1,0 +1,57 @@
+# Despliegue del visor.
+#
+# Sirve tal cual para levantarlo en local o en cualquier docker host:
+#     cp .env.example .env   (y poner una clave)
+#     docker compose up -d --build
+#
+# Para EasyPanel, ver la seccion correspondiente del README: alli el servicio
+# se crea como app con build tipo Dockerfile y el volumen se monta desde
+# /etc/easypanel/projects/<proyecto>/<servicio>/volumes/data.
+
+services:
+  arbol:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: arbol-robson:latest
+    container_name: arbol-robson
+    restart: unless-stopped
+
+    environment:
+      # --- Acceso (obligatorio: sin clave el contenedor no arranca) ---
+      BASIC_AUTH_USER: ${BASIC_AUTH_USER:-familia}
+      BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD:?definir BASIC_AUTH_PASSWORD en .env}
+
+      # --- Contenido ---
+      SITE_TITLE: ${SITE_TITLE:-Arbol familiar Robson}
+      GEDCOM_FILE: ${GEDCOM_FILE:-arbol-robson.ged}
+      DEFAULT_PERSON_ID: ${DEFAULT_PERSON_ID:-}
+
+      # --- Privacidad ---
+      PRIVACY_MODE: ${PRIVACY_MODE:-true}
+      PRIVACY_BIRTH_YEAR_CUTOFF: ${PRIVACY_BIRTH_YEAR_CUTOFF:-1930}
+      PRIVACY_HIDE_UNDATED: ${PRIVACY_HIDE_UNDATED:-false}
+
+      # --- Rendimiento ---
+      DEFAULT_GENERATIONS: ${DEFAULT_GENERATIONS:-4}
+      MAX_NODES: ${MAX_NODES:-400}
+
+    volumes:
+      # El GEDCOM vive fuera de la imagen: se reemplaza y se reinicia, sin build.
+      - ./data:/data:ro
+
+    ports:
+      - "${HOST_PORT:-8080}:8080"
+
+    # nginx-unprivileged ya corre como uid 101; esto lo deja explicito y evita
+    # que una reconfiguracion futura lo devuelva a root sin que nadie lo note.
+    user: "101:101"
+
+    security_opt:
+      - no-new-privileges:true
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

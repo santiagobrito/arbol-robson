@@ -1,0 +1,25 @@
+node_modules/
+dist/
+.env
+*.local
+.DS_Store
+
+# --- GEDCOM ---
+# Fuera del repositorio a proposito. El archivo tiene nombre completo y fecha
+# de nacimiento de mas de mil personas vivas; un commit deja ese dato en el
+# historial para siempre aunque despues se borre el fichero. Se despliega
+# copiandolo al volumen /data (ver README).
+#
+# Si preferis versionarlo igual, comenta estas dos lineas Y aseguraté de que
+# el repositorio esta en privado:
+data/*.ged
+data/*.GED
+
+# Mismo motivo: este informe cita nombres y fechas de nacimiento de personas
+# vivas, en formato "Nombre Apellido (fecha - )". Se queda en disco, fuera
+# del repositorio.
+docs/gedcom-lineas-a-revisar.txt
+
+# Documentacion interna del workspace, nunca al repositorio
+/log.md
+/CLAUDE.md
