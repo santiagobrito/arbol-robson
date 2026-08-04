@@ -133,6 +133,9 @@ class App {
     $('#zoom-out').addEventListener('click', () => this.tree.zoomBy(1 / 1.35));
 
     const about = $<HTMLDialogElement>('#about');
+    // El panel de créditos no puede afirmar algo que la configuración desmiente.
+    $('#about-privacy-on').hidden = !this.cfg.privacyMode;
+    $('#about-privacy-off').hidden = this.cfg.privacyMode;
     $('#about-open').addEventListener('click', () => about.showModal());
 
     const input = $<HTMLInputElement>('#search-input');

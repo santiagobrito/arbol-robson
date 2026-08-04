@@ -123,13 +123,21 @@
         <h3>Esta edición</h3>
         <p>
           Edición familiar Brito Devoto: conversión del documento original a
-          GEDCOM 5.5.1 y este visor. Es un sitio privado de uso familiar, no una
-          republicación de la obra de Graeme Wall.
+          GEDCOM 5.5.1 y este visor. La obra de Graeme Wall estuvo publicada en
+          abierto entre 2004 y 2019; al desaparecer su sitio, esta edición la
+          vuelve a poner en línea.
         </p>
-        <p>
-          Por respeto a quienes siguen vivos, las fechas y lugares de nacimiento
-          de las personas sin defunción registrada y nacidas después de 1930 no
-          se muestran.
+
+        <!-- Se muestra sólo una de las dos, según el modo privacidad activo. -->
+        <p id="about-privacy-on" hidden>
+          Por respeto a quienes siguen vivos, de las personas sin defunción
+          registrada y nacidas después de 1930 se muestra sólo el nombre: ni
+          fechas, ni lugares, ni notas.
+        </p>
+        <p id="about-privacy-off" hidden>
+          Se muestran los datos tal como figuraban en la publicación original.
+          Si aparecés en este árbol y querés que se quiten o corrijan tus datos,
+          escribinos y lo hacemos.
         </p>
       </dialog>
     </div>
