@@ -25,3 +25,6 @@ docs/gedcom-lineas-a-revisar.txt
 /CLAUDE.md
 
 docs/fuente-original-greywall-2017.html
+
+# Clave de la autenticacion HTTP, nunca al repositorio
+.clave-basic-auth.txt
