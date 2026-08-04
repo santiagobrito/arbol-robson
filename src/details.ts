@@ -33,7 +33,9 @@ function personLink(
 ): HTMLElement {
   if (!indi) return el('span', 'person-link person-link--unknown', 'Desconocido');
   const link = el('a', 'person-link', nameWithYears(indi));
-  link.href = `#/${indi.id}`;
+  // Enlace real, no ancla: asi un buscador puede seguirlo hasta la ficha
+  // de esa persona, y el menu contextual del navegador ofrece 'abrir en otra pestana'.
+  link.href = `/persona/${indi.id}`;
   link.addEventListener('click', (event) => {
     event.preventDefault();
     onNavigate(indi.id);
@@ -102,7 +104,7 @@ export class DetailsPanel {
     const share = el('button', 'btn', 'Copiar enlace');
     share.type = 'button';
     share.addEventListener('click', () => {
-      const url = `${location.origin}${location.pathname}#/${indi.id}`;
+      const url = `${location.origin}/persona/${indi.id}`;
       void navigator.clipboard?.writeText(url).then(
         () => { share.textContent = 'Enlace copiado'; },
         () => { share.textContent = url; },

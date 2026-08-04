@@ -5,7 +5,7 @@ import { loadConfig, type AppConfig } from './config';
 import { DetailsPanel } from './details';
 import { aplicarFotos } from './fotos';
 import { buildIndex } from './privacy';
-import { parseHash, stateToHash } from './router';
+import { parseLocation, stateToPath } from './router';
 import { buildSearchIndex, searchPeople, type SearchEntry } from './search';
 import { extractSubtree } from './subtree';
 import type { AppState, TreeIndex, ViewMode } from './types';
@@ -44,7 +44,7 @@ class App {
       mode: 'both',
       generations: cfg.defaultGenerations,
     };
-    this.state = parseHash(location.hash, this.defaults);
+    this.state = parseLocation(location.pathname, location.hash, this.defaults);
     if (!index.indis.has(this.state.personId)) {
       this.state = { ...this.state, personId: this.defaults.personId };
     }
@@ -66,24 +66,29 @@ class App {
     });
 
     this.bindControls();
-    window.addEventListener('hashchange', () => this.onHashChange());
+    // popstate cubre atras/adelante del navegador; hashchange, los enlaces
+    // antiguos con # que alguien pegue estando ya dentro de la aplicacion.
+    window.addEventListener('popstate', () => this.onUrlChange());
+    window.addEventListener('hashchange', () => this.onUrlChange());
+    // La pagina generada trae la ficha en HTML para los buscadores. Una vez que
+    // el arbol esta vivo, sobra.
+    document.getElementById('prerender')?.remove();
     this.render();
   }
 
-  /** Cambia el estado y deja que hashchange dispare el render (una sola via). */
+  /** Cambia el estado y escribe la URL canonica en el historial. */
   private go(patch: Partial<AppState>): void {
     const next = { ...this.state, ...patch };
-    const hash = stateToHash(next, this.defaults);
-    if (hash === location.hash) {
-      this.state = next;
-      this.render();
-      return;
+    const url = stateToPath(next, this.defaults);
+    if (url !== location.pathname || location.hash) {
+      history.pushState(null, '', url);
     }
-    location.hash = hash;
+    this.state = next;
+    this.render();
   }
 
-  private onHashChange(): void {
-    const next = parseHash(location.hash, this.defaults);
+  private onUrlChange(): void {
+    const next = parseLocation(location.pathname, location.hash, this.defaults);
     if (!this.index.indis.has(next.personId)) return;
     // Al saltar a otra persona (enlace compartido, atras del navegador) la
     // ficha abierta es de la anterior: dejarla puesta despista.

@@ -38,3 +38,7 @@ data/fotos-originales/
 data/fotos/
 data/fotos.json
 docs/historia/*.jpeg
+
+# Paginas generadas por persona y sitemap: se derivan del GEDCOM
+data/paginas/
+data/sitemap.xml
