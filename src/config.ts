@@ -31,6 +31,10 @@ export interface AppConfig {
   defaultGenerations: number;
   /** Tope duro de nodos por render. Es lo que mantiene fluido el movil. */
   maxNodes: number;
+  /** Manifiesto de fotos: {idPersona: nombreDeArchivo}. */
+  fotosUrl: string;
+  /** Carpeta donde viven las miniaturas. */
+  fotosBase: string;
 }
 
 const DEFAULTS: AppConfig = {
@@ -42,6 +46,8 @@ const DEFAULTS: AppConfig = {
   defaultPersonId: null,
   defaultGenerations: 4,
   maxNodes: 400,
+  fotosUrl: '/data/fotos.json',
+  fotosBase: '/data/fotos/',
 };
 
 function fromViteEnv(): Partial<AppConfig> {
@@ -65,6 +71,8 @@ function sanitize(raw: unknown): Partial<AppConfig> {
 
   if (typeof r.title === 'string' && r.title) out.title = r.title;
   if (typeof r.gedcomUrl === 'string' && r.gedcomUrl) out.gedcomUrl = r.gedcomUrl;
+  if (typeof r.fotosUrl === 'string' && r.fotosUrl) out.fotosUrl = r.fotosUrl;
+  if (typeof r.fotosBase === 'string' && r.fotosBase) out.fotosBase = r.fotosBase;
   if (typeof r.privacyMode === 'boolean') out.privacyMode = r.privacyMode;
   if (typeof r.privacyHideUndated === 'boolean') out.privacyHideUndated = r.privacyHideUndated;
   if (typeof r.defaultPersonId === 'string' && r.defaultPersonId) {

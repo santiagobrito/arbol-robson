@@ -3,6 +3,7 @@ import { gedcomToJson } from 'topola';
 import { TreeView } from './chart';
 import { loadConfig, type AppConfig } from './config';
 import { DetailsPanel } from './details';
+import { aplicarFotos } from './fotos';
 import { buildIndex } from './privacy';
 import { parseHash, stateToHash } from './router';
 import { buildSearchIndex, searchPeople, type SearchEntry } from './search';
@@ -204,6 +205,10 @@ async function bootstrap(): Promise<void> {
     status.textContent = 'Procesando...';
     const index = buildIndex(gedcomToJson(text), cfg);
     if (index.indis.size === 0) throw new Error('El archivo GEDCOM no contiene personas.');
+
+    // Despues de la privacidad, a proposito: no se le pone foto a quien tiene
+    // los datos ocultos.
+    await aplicarFotos(index, cfg);
 
     status.hidden = true;
     $('#app').hidden = false;

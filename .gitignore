@@ -31,3 +31,10 @@ docs/fuente-original-greywall-2017.html
 
 # Copias de seguridad del GEDCOM
 data/*.ged.bak-*
+
+# Fotos: los originales se quedan en disco; al servidor van solo las miniaturas.
+# Son fotos de personas, varias vivas: fuera del repositorio.
+data/fotos-originales/
+data/fotos/
+data/fotos.json
+docs/historia/*.jpeg
