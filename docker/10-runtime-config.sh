@@ -17,19 +17,47 @@ RUNTIME_DIR=/tmp/runtime
 mkdir -p "$RUNTIME_DIR"
 
 # ---------- Autenticacion HTTP ----------
+#
+# Por defecto el sitio pide usuario y contrasena, y el contenedor se NIEGA a
+# arrancar si falta: un despliegue mal configurado publicaria los datos de mas
+# de mil personas vivas, y es preferible que no levante.
+#
+# PUBLIC_ACCESS=true desactiva la autenticacion. Es una decision deliberada, no
+# un descuido: hace falta escribir la variable a mano. Lo que se publica asi
+# sale de la mano de quien lo publica.
 
 BASIC_AUTH_USER="${BASIC_AUTH_USER:-familia}"
 
-if [ -z "${BASIC_AUTH_PASSWORD:-}" ]; then
-  echo "[arbol] ERROR: falta la variable BASIC_AUTH_PASSWORD." >&2
-  echo "[arbol] El arbol tiene datos de personas vivas y no se publica sin clave." >&2
-  exit 1
-fi
+is_true() {
+  case "$(printf '%s' "${1:-}" | tr '[:upper:]' '[:lower:]')" in
+    1 | true | yes | on) return 0 ;;
+    *) return 1 ;;
+  esac
+}
 
-# -m fuerza apr1 (MD5), soportado por nginx en cualquier libc. bcrypt depende
-# del crypt() del sistema y en musl no siempre esta.
-htpasswd -bcm "$RUNTIME_DIR/htpasswd" "$BASIC_AUTH_USER" "$BASIC_AUTH_PASSWORD" >/dev/null 2>&1
-chmod 600 "$RUNTIME_DIR/htpasswd"
+if is_true "${PUBLIC_ACCESS:-}"; then
+  echo 'auth_basic off;' > "$RUNTIME_DIR/auth.conf"
+  rm -f "$RUNTIME_DIR/htpasswd"
+  echo "[arbol] AVISO: PUBLIC_ACCESS=true. El sitio queda ABIERTO, sin contrasena." >&2
+else
+  if [ -z "${BASIC_AUTH_PASSWORD:-}" ]; then
+    echo "[arbol] ERROR: falta la variable BASIC_AUTH_PASSWORD." >&2
+    echo "[arbol] El arbol tiene datos de personas vivas y no se publica sin clave." >&2
+    echo "[arbol] Para publicarlo abierto a proposito: PUBLIC_ACCESS=true." >&2
+    exit 1
+  fi
+
+  # -m fuerza apr1 (MD5), soportado por nginx en cualquier libc. bcrypt depende
+  # del crypt() del sistema y en musl no siempre esta.
+  htpasswd -bcm "$RUNTIME_DIR/htpasswd" "$BASIC_AUTH_USER" "$BASIC_AUTH_PASSWORD" >/dev/null 2>&1
+  chmod 600 "$RUNTIME_DIR/htpasswd"
+
+  cat > "$RUNTIME_DIR/auth.conf" <<'AUTHEOF'
+auth_basic "Arbol familiar";
+auth_basic_user_file /tmp/runtime/htpasswd;
+AUTHEOF
+fi
+chmod 644 "$RUNTIME_DIR/auth.conf"
 
 # ---------- Configuracion del frontend ----------
 

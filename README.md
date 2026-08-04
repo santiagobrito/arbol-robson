@@ -9,12 +9,14 @@ todo se procesa en el navegador.
 > 2004–2014.** Publicada en `http://www.greywall.demon.co.uk/genealogy/robson.html`,
 > hoy fuera de línea (cerró Demon Internet, el proveedor que la alojaba);
 > se conserva en el [Internet Archive](https://web.archive.org/web/2017/http://www.greywall.demon.co.uk/genealogy/robson.html).
-> Este visor es una edición familiar privada, no una republicación de esa obra.
 > La atribución completa, con la lista de colaboradores que el propio autor
 > acreditaba, está en el botón **Acerca de** de la aplicación.
 
-**El sitio no es público.** Está detrás de autenticación HTTP y trae un modo de
-privacidad que oculta los datos de las personas presuntamente vivas.
+**Estado del despliegue:** [hugderobson.servidorweb.xyz](https://hugderobson.servidorweb.xyz)
+está **abierto, sin contraseña y con el modo privacidad apagado**. Es una
+decisión deliberada del responsable: los datos estuvieron publicados en abierto
+entre 2004 y 2019 y esto se considera una republicación de esa obra. El código
+soporta las dos configuraciones; ver [Privacidad](#privacidad).
 
 ---
 
@@ -63,6 +65,13 @@ Tres capas, de más a menos importante:
 
 ### 1. Autenticación HTTP (la que de verdad protege)
 
+> **Estado actual del despliegue:** desactivada. `hugderobson.servidorweb.xyz`
+> está **abierto y con el modo privacidad apagado**, por decisión explícita:
+> los datos provienen de una web que fue pública entre 2004 y 2019 y esto se
+> considera una republicación. Quien publica asume la responsabilidad sobre los
+> datos personales expuestos. Para volver a cerrarlo: `PUBLIC_ACCESS=false` +
+> `BASIC_AUTH_PASSWORD=<clave>` y reiniciar.
+
 nginx pide usuario y contraseña para **todo**: la web, el `config.json` y el
 propio archivo `.ged`. Se configura por variables de entorno:
 
@@ -74,6 +83,10 @@ BASIC_AUTH_PASSWORD=<lo que elijas>
 El contenedor **se niega a arrancar si falta `BASIC_AUTH_PASSWORD`**. Es a
 propósito: un despliegue mal configurado publicaría los datos de más de mil
 personas vivas, y es preferible que no levante.
+
+Para dejarlo abierto hay que pedirlo a mano con `PUBLIC_ACCESS=true`. No hay
+forma de acabar con el sitio público por olvido: o hay clave, o hay una variable
+que dice explícitamente que se quiere sin ella.
 
 Para cambiar la clave: cambiar la variable y reiniciar el servicio. No hace falta
 reconstruir la imagen.
@@ -109,8 +122,9 @@ fecha (unas 795 personas más). Más seguro y más pobre; queda a tu criterio.
 ### 3. No indexable
 
 `noindex` en la etiqueta meta, cabecera `X-Robots-Tag` en todas las respuestas y
-un `robots.txt` que bloquea todo. De todos modos un buscador se choca primero
-con el 401.
+un `robots.txt` que bloquea todo. Con el sitio abierto, esto es lo único que
+evita que los nombres vuelvan a los buscadores: son indicaciones que los
+rastreadores respetan por convención, no un control técnico.
 
 ---
 
@@ -120,7 +134,8 @@ El servicio es una app normal con build por Dockerfile. **Nunca Nixpacks**: corr
 como root y es la regla de este servidor desde el incidente de abril de 2026.
 
 1. **Crear el servicio** (`services.app.createService`) y conectarlo al repo
-   (`updateSourceGithub`). El repo va **privado**.
+   (`updateSourceGithub`). El repo puede ser público: no contiene ni el GEDCOM
+   ni credenciales.
 
 2. **Forzar el build por Dockerfile**:
 
@@ -132,7 +147,7 @@ como root y es la regla de este servidor desde el incidente de abril de 2026.
 
    ```
    BASIC_AUTH_USER=familia
-   BASIC_AUTH_PASSWORD=<clave>
+   BASIC_AUTH_PASSWORD=<clave>     # o, para dejarlo abierto: PUBLIC_ACCESS=true
    SITE_TITLE=Arbol familiar Robson
    GEDCOM_FILE=arbol-robson.ged
    PRIVACY_MODE=true
@@ -219,7 +234,8 @@ reiniciar el servicio, no reconstruir la imagen.**
 | Variable | Por defecto | Qué hace |
 |---|---|---|
 | `BASIC_AUTH_USER` | `familia` | Usuario de la autenticación HTTP |
-| `BASIC_AUTH_PASSWORD` | — | **Obligatoria.** Sin ella el contenedor no arranca |
+| `BASIC_AUTH_PASSWORD` | — | **Obligatoria** salvo `PUBLIC_ACCESS=true`. Sin una de las dos, el contenedor no arranca |
+| `PUBLIC_ACCESS` | `false` | `true` desactiva la autenticación y deja el sitio abierto |
 | `SITE_TITLE` | `Arbol familiar Robson` | Título de la página |
 | `GEDCOM_FILE` | `arbol-robson.ged` | Nombre del archivo dentro de `/data` |
 | `DEFAULT_PERSON_ID` | (vacío) | Persona inicial. Vacío = la más antigua con descendencia |

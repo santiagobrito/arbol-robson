@@ -18,9 +18,11 @@ services:
     restart: unless-stopped
 
     environment:
-      # --- Acceso (obligatorio: sin clave el contenedor no arranca) ---
+      # --- Acceso ---
+      # Sin clave el contenedor no arranca, salvo PUBLIC_ACCESS=true.
       BASIC_AUTH_USER: ${BASIC_AUTH_USER:-familia}
-      BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD:?definir BASIC_AUTH_PASSWORD en .env}
+      BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD:-}
+      PUBLIC_ACCESS: ${PUBLIC_ACCESS:-false}
 
       # --- Contenido ---
       SITE_TITLE: ${SITE_TITLE:-Arbol familiar Robson}
