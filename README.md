@@ -187,6 +187,57 @@ docker compose up -d --build
 
 ---
 
+## Añadir fotos
+
+Las fotos **no van dentro del GEDCOM**: viven en `/data/fotos/` con un
+manifiesto `/data/fotos.json`. Así se pueden añadir sin regenerar el árbol, y
+regenerar el árbol sin tocar las fotos.
+
+1. **Dejar el original** en `data/fotos-originales/`, con el nombre de la
+   persona **o** su identificador:
+
+   ```
+   data/fotos-originales/Jane Ferrish.jpg
+   data/fotos-originales/I2787.jpg          <- equivalente y sin ambigüedad
+   ```
+
+2. **Procesarlas**:
+
+   ```bash
+   python3 scripts/preparar-fotos.py
+   ```
+
+   Genera las miniaturas en `data/fotos/` y reescribe `data/fotos.json`.
+   Si el nombre coincide con varias personas avisa y no adivina (hay cinco
+   Hugh Robson en este árbol): en ese caso, renombrar el archivo con el ID.
+
+3. **Subirlas al volumen**:
+
+   ```bash
+   tar czf - -C data fotos fotos.json | ssh easypanel 'cat > /tmp/fotos.tgz'
+   ssh easypanel 'sudo tar xzf /tmp/fotos.tgz \
+     -C /etc/easypanel/projects/arbol/web/volumes/data && rm /tmp/fotos.tgz'
+   ```
+
+   No hace falta reiniciar ni reconstruir nada: recargar el navegador basta.
+
+**Qué hace el script y por qué:**
+
+- **Miniaturas de 140×180.** Topola dibuja las fotos a 70×90 puntos; se generan
+  al doble para pantallas retina. Una vista puede tener 400 tarjetas: a 200 kB
+  por foto serían 80 MB en el móvil de quien lo abra. La de Hugh pasó de 192 kB
+  a 5 kB.
+- **Borra los metadatos.** Una foto de móvil lleva EXIF con coordenadas GPS,
+  fecha y modelo del teléfono. Publicar eso de una persona viva es peor que
+  publicar su fecha de nacimiento.
+- **Recorta al centro** en proporción 7:9 en vez de deformar la cara.
+
+**Privacidad:** las fotos se aplican *después* del filtro de privacidad y lo
+respetan. Con `PRIVACY_MODE=true`, a quien tenga los datos ocultos tampoco se le
+pone retrato: una cara identifica mejor que una fecha.
+
+---
+
 ## Actualizar el GEDCOM
 
 El archivo vive en el volumen `/data`, **fuera de la imagen**. Reemplazarlo no
