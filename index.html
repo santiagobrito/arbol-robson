@@ -43,6 +43,8 @@
           </label>
 
           <p class="topbar__current">Centrado en <strong id="current-person"></strong></p>
+
+          <button id="about-open" type="button" class="link-btn">Acerca de</button>
         </div>
       </header>
 
@@ -62,6 +64,74 @@
         <button type="button" class="details__close" aria-label="Cerrar ficha">&times;</button>
         <div class="details__body"></div>
       </aside>
+
+      <!--
+        Créditos de la fuente original. El texto es estático: no sale del
+        GEDCOM, así que el modo privacidad no lo toca.
+      -->
+      <dialog id="about" class="about">
+        <form method="dialog" class="about__closeform">
+          <button class="about__close" aria-label="Cerrar">&times;</button>
+        </form>
+
+        <h2>Acerca de este árbol</h2>
+
+        <h3>Fuente original</h3>
+        <p>
+          Los datos provienen de <strong><em>Descendants of Hugh Robson</em></strong>,
+          la investigación genealógica de <strong>Graeme Wall</strong>, en su
+          <strong>versión 10z del 4 de mayo de 2015</strong>.
+        </p>
+        <p class="about__copyright">&copy; Graeme Wall, 2004&ndash;2014.</p>
+        <p>
+          Se publicó en
+          <code>http://www.greywall.demon.co.uk/genealogy/robson.html</code>.
+          El sitio ya no existe: desapareció con el cierre de Demon Internet, el
+          proveedor británico que lo alojaba. Se conservan copias en el
+          <a href="https://web.archive.org/web/2017/http://www.greywall.demon.co.uk/genealogy/robson.html"
+             target="_blank" rel="noreferrer noopener">Internet Archive</a>.
+        </p>
+
+        <h3>Quienes lo hicieron posible</h3>
+        <p>
+          El propio Graeme Wall acreditaba en su web a las decenas de familiares
+          y colaboradores que aportaron datos a lo largo de los años:
+        </p>
+        <p class="about__contributors">
+          Robert Wells y Lucia Whitehead (Reino Unido) · Lea Armstrong, Ken Brown,
+          Anthony Dowd, Di Foster, Mary Ann Fraser, Russ Gittins, Dianne Layden,
+          Verna MacKenzie, Pamela McCann, Lesley Reed y Len Wells (Australia) ·
+          Patricio Aguilar, Bernardo Allan, Jorge Attwell, Matías Attwell,
+          Pamela Campbell, Reginald Campbell, Gonzalo Carbajal, Esteban Cartledge,
+          Chris Dickin, Andrés Alejandro Dobie, Sofía Gandini, Ingrid Glenz,
+          Monice Glenz, Moira Johnstone, Anne Marie Leroi, Ivonne Leroi,
+          Ariana Livingston Luperia, Phyllis Macnie, Marina McGaw,
+          Florencia Ruiz Migone, Michael Mohr-Bell, Enrique Moore,
+          Irene Gebbie Neumann, Eileen Noble, Eduardo Luis O'Connor, Sofía Raffo,
+          Juan Robson, Lía Fernanda Rodríguez Romero, Elizanda de la Sota,
+          Patricia de la Sota, Diego Truninger, Andrés Watson, Eduardo Watson,
+          Ricardo Watson, Arturo Wesley, Cecile Wesley, Jimmy Wray, Martin Wray y
+          María Victoria Zapiola (Argentina) · Eric Fischer, Viviana Haurigot,
+          Pedro Piccardo, Carlos Zubillaga y Peggy Santos (Estados Unidos) ·
+          Andrew Walker (Indonesia) · Gordon Yorston (Chile) · James Bell y
+          Marcela Dutra (Uruguay) · Katrina Evans y John y Lorraine Larke (Canadá) ·
+          John Campbell (Francia) · Paul Gladish (España) · Victoria MacDonald e
+          Ian Seton Campbell (Sudáfrica) · Harriet Sain (Italia) ·
+          Lorraine Bottreau (Singapur).
+        </p>
+
+        <h3>Esta edición</h3>
+        <p>
+          Edición familiar Brito Devoto: conversión del documento original a
+          GEDCOM 5.5.1 y este visor. Es un sitio privado de uso familiar, no una
+          republicación de la obra de Graeme Wall.
+        </p>
+        <p>
+          Por respeto a quienes siguen vivos, las fechas y lugares de nacimiento
+          de las personas sin defunción registrada y nacidas después de 1930 no
+          se muestran.
+        </p>
+      </dialog>
     </div>
 
     <script type="module" src="/src/main.ts"></script>

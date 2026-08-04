@@ -230,6 +230,87 @@ body {
   font-weight: 600;
 }
 
+.link-btn {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---------- Acerca de ---------- */
+
+.about {
+  width: min(680px, calc(100vw - 2rem));
+  max-height: 85dvh;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.about::backdrop {
+  background: rgb(0 0 0 / 55%);
+}
+
+.about h2 {
+  margin: 0 2rem 1rem 0;
+  font-size: 1.25rem;
+}
+
+.about h3 {
+  margin: 1.4rem 0 0.4rem;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.about p {
+  margin: 0 0 0.7rem;
+}
+
+.about code {
+  overflow-wrap: anywhere;
+  font-size: 0.85em;
+}
+
+.about a {
+  color: var(--accent);
+}
+
+.about__copyright {
+  font-weight: 600;
+}
+
+.about__contributors {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.about__closeform {
+  float: right;
+}
+
+.about__close {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
 .notice {
   margin: 0;
   padding: 0.5rem 0.9rem;

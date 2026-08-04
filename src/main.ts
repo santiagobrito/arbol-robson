@@ -132,6 +132,9 @@ class App {
     $('#zoom-in').addEventListener('click', () => this.tree.zoomBy(1.35));
     $('#zoom-out').addEventListener('click', () => this.tree.zoomBy(1 / 1.35));
 
+    const about = $<HTMLDialogElement>('#about');
+    $('#about-open').addEventListener('click', () => about.showModal());
+
     const input = $<HTMLInputElement>('#search-input');
     const results = $('#search-results');
 

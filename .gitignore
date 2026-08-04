@@ -23,3 +23,5 @@ docs/gedcom-lineas-a-revisar.txt
 # Documentacion interna del workspace, nunca al repositorio
 /log.md
 /CLAUDE.md
+
+docs/fuente-original-greywall-2017.html

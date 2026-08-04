@@ -4,6 +4,15 @@ Visor web del árbol genealógico familiar. Lee un archivo GEDCOM 5.5.1 y dibuja
 un árbol interactivo navegable desde el celular. Sin backend ni base de datos:
 todo se procesa en el navegador.
 
+> **Fuente de los datos:** *Descendants of Hugh Robson*, investigación de
+> **Graeme Wall**, versión 10z del 4 de mayo de 2015. **© Graeme Wall,
+> 2004–2014.** Publicada en `http://www.greywall.demon.co.uk/genealogy/robson.html`,
+> hoy fuera de línea (cerró Demon Internet, el proveedor que la alojaba);
+> se conserva en el [Internet Archive](https://web.archive.org/web/2017/http://www.greywall.demon.co.uk/genealogy/robson.html).
+> Este visor es una edición familiar privada, no una republicación de esa obra.
+> La atribución completa, con la lista de colaboradores que el propio autor
+> acreditaba, está en el botón **Acerca de** de la aplicación.
+
 **El sitio no es público.** Está detrás de autenticación HTTP y trae un modo de
 privacidad que oculta los datos de las personas presuntamente vivas.
 
