@@ -119,12 +119,16 @@ no es este filtro sino a quién le das la contraseña.
 `PRIVACY_HIDE_UNDATED=true` extiende la protección a quienes no tienen ninguna
 fecha (unas 795 personas más). Más seguro y más pobre; queda a tu criterio.
 
-### 3. No indexable
+### 3. Indexable
 
-`noindex` en la etiqueta meta, cabecera `X-Robots-Tag` en todas las respuestas y
-un `robots.txt` que bloquea todo. Con el sitio abierto, esto es lo único que
-evita que los nombres vuelvan a los buscadores: son indicaciones que los
-rastreadores respetan por convención, no un control técnico.
+**Desde el 04-ago-2026 el sitio es indexable a propósito.** Se retiraron el
+`noindex`, el `nofollow` y el bloqueo de `robots.txt`, y se generan 2.846
+páginas con la ficha de cada persona en HTML.
+
+Para revertirlo: reponer la línea comentada en `docker/security-headers.conf`,
+el `<meta name="robots">` en `index.html`, y poner `Disallow: /` en
+`public/robots.txt`. Ojo: lo ya indexado no desaparece por eso — hay que pedir
+la retirada en Search Console y esperar a las cachés.
 
 ---
 
@@ -184,6 +188,42 @@ mkdir -p data && cp /ruta/al/arbol-robson.ged data/
 docker compose up -d --build
 # http://localhost:8080
 ```
+
+---
+
+## Páginas por persona e indexación
+
+La aplicación carga el GEDCOM por JavaScript, así que el HTML de la portada **no
+contiene ni un nombre del árbol**. Y `#/I123` no es una URL distinta para un
+rastreador: todo lo que va tras la almohadilla se ignora. Sin páginas generadas,
+quitar el `noindex` deja una única página indexada y vacía.
+
+`scripts/generar-paginas.py` produce un HTML por persona con la ficha en texto
+plano (nombre, fechas, lugares, foto y enlaces a padres, hermanos, pareja e
+hijos), su propio `title`, `description`, Open Graph y `canonical`. La
+aplicación lo sustituye por el árbol al arrancar: el buscador ve la ficha, la
+persona ve el árbol. Los enlaces entre fichas son `<a href>` reales, así que un
+rastreador recorre el árbol entero desde cualquier punto.
+
+```bash
+npm run build                        # primero: de aquí salen los assets
+python3 scripts/generar-paginas.py   # -> data/paginas/ + data/sitemap.xml
+```
+
+Y subirlo al volumen:
+
+```bash
+tar czf - -C data paginas sitemap.xml | ssh easypanel 'cat > /tmp/paginas.tgz'
+ssh easypanel 'V=/etc/easypanel/projects/arbol/web/volumes/data
+  sudo rm -rf "$V/paginas" && sudo tar xzf /tmp/paginas.tgz -C "$V" && rm /tmp/paginas.tgz'
+```
+
+**Hay que regenerarlas** cuando cambie el GEDCOM, cuando se añadan fotos, o
+cuando el build produzca assets nuevos (los nombres llevan hash).
+
+**Rutas:** la canónica es `/persona/I123`. Los enlaces antiguos `#/I123` se
+siguen aceptando al entrar, porque son los que la familia ya tiene compartidos;
+al navegar, la barra de direcciones pasa a la forma nueva.
 
 ---
 
