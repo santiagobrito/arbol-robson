@@ -28,3 +28,6 @@ docs/fuente-original-greywall-2017.html
 
 # Clave de la autenticacion HTTP, nunca al repositorio
 .clave-basic-auth.txt
+
+# Copias de seguridad del GEDCOM
+data/*.ged.bak-*
